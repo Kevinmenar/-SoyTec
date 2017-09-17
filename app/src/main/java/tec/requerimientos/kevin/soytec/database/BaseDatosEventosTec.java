@@ -3,10 +3,13 @@ package tec.requerimientos.kevin.soytec.database;
 import tec.requerimientos.kevin.soytec.database.EventosTec.Mensajes;
 import tec.requerimientos.kevin.soytec.database.EventosTec.Evento;
 import tec.requerimientos.kevin.soytec.database.EventosTec.Usuario;
+import tec.requerimientos.kevin.soytec.database.EventosTec.Asistencia;
+import tec.requerimientos.kevin.soytec.database.EventosTec.Favoritos;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.provider.BaseColumns;
 
 public class BaseDatosEventosTec extends SQLiteOpenHelper {
 
@@ -27,10 +30,10 @@ public class BaseDatosEventosTec extends SQLiteOpenHelper {
         String idMensaje = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
                 Tablas.mensaje, Mensajes.id);
 
-        String idEvento = String.format("REFERENCES %s(%s)",
+        String idEvento = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
                 Tablas.evento, Evento.id);
 
-        String idUsuario = String.format("REFERENCES %s(%s)",
+        String idUsuario = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
                 Tablas.usuario, Usuario.id);
     }
 
@@ -53,11 +56,66 @@ public class BaseDatosEventosTec extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL %s)",
+                Tablas.mensaje, BaseColumns._ID,
+                Mensajes.id, Mensajes.mensaje,
+                Mensajes.idUsuario, Referencias.idUsuario));
 
+        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT NOT NULL %s,%s TEXT NOT NULL %s)",
+                Tablas.asistencia, BaseColumns._ID,
+                Asistencia.idUsuario, Referencias.idUsuario,
+                Asistencia.idEvento, Referencias.idEvento));
+
+        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT NOT NULL %s,%s TEXT NOT NULL %s)",
+                Tablas.favoritos, BaseColumns._ID,
+                Favoritos.idUsuario, Referencias.idUsuario,
+                Favoritos.idEvento, Referencias.idEvento));
+
+        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL, %s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL)",
+                Tablas.usuario, BaseColumns._ID,
+                Usuario.id, Usuario.correo,
+                Usuario.carnet, Usuario.contrasena,
+                Usuario.tipoUsuario
+                ));
+
+        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL, %s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL)",
+                Tablas.usuario, BaseColumns._ID,
+                Usuario.id, Usuario.correo,
+                Usuario.carnet, Usuario.contrasena,
+                Usuario.tipoUsuario
+        ));
+
+        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL," +
+                        "%s DATETIME NOT NULL, %s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL, %s TEXT NOT NULL" +
+                        "%s INTEGER NOT NULL)",
+                Tablas.evento, BaseColumns._ID,
+                Evento.id, Evento.nombre,
+                Evento.fecha, Evento.lugar,
+                Evento.categoria, Evento.organizador,
+                Evento.costo
+        ));
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + Tablas.asistencia);
+        db.execSQL("DROP TABLE IF EXISTS " + Tablas.evento);
+        db.execSQL("DROP TABLE IF EXISTS " + Tablas.favoritos);
+        db.execSQL("DROP TABLE IF EXISTS " + Tablas.mensaje);
+        db.execSQL("DROP TABLE IF EXISTS " + Tablas.usuario);
 
+        onCreate(db);
     }
 }

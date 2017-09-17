@@ -51,9 +51,18 @@ public class EventosTec {
             return "M-" + UUID.randomUUID().toString();
         }
     }
+
     public static class Usuario implements ColumnasUsuario {
         public static String generarIdUsuario() {
             return "U-" + UUID.randomUUID().toString();
         }
+    }
+
+    public static class Asistencia implements ColumnasAsistencia {
+
+    }
+
+    public static class Favoritos implements ColumnasFavoritos {
+
     }
 }
