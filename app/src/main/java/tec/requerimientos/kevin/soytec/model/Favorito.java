@@ -1,16 +1,16 @@
 package tec.requerimientos.kevin.soytec.model;
 
 
-public class Favoritos {
+public class Favorito {
     private int userId;
     private int eventoId;
 
-    public Favoritos(int userId, int eventoId) {
+    public Favorito(int userId, int eventoId) {
         this.userId = userId;
         this.eventoId = eventoId;
     }
 
-    public Favoritos() {
+    public Favorito() {
     }
 
     public int getUserId() {

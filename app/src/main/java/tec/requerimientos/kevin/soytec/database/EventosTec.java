@@ -40,7 +40,7 @@ public class EventosTec {
         String tipoUsuario = "tipo_usuario";
     }
 
-    public static class Evento implements ColumnasEvento {
+    public static class Eventos implements ColumnasEvento {
         public static String generarIdEvento() {
             return "E-" + UUID.randomUUID().toString();
         }
@@ -52,13 +52,13 @@ public class EventosTec {
         }
     }
 
-    public static class Usuario implements ColumnasUsuario {
+    public static class Usuarios implements ColumnasUsuario {
         public static String generarIdUsuario() {
             return "U-" + UUID.randomUUID().toString();
         }
     }
 
-    public static class Asistencia implements ColumnasAsistencia {
+    public static class Asistencias implements ColumnasAsistencia {
 
     }
 

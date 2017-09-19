@@ -1,9 +1,9 @@
 package tec.requerimientos.kevin.soytec.database;
 
 import tec.requerimientos.kevin.soytec.database.EventosTec.Mensajes;
-import tec.requerimientos.kevin.soytec.database.EventosTec.Evento;
-import tec.requerimientos.kevin.soytec.database.EventosTec.Usuario;
-import tec.requerimientos.kevin.soytec.database.EventosTec.Asistencia;
+import tec.requerimientos.kevin.soytec.database.EventosTec.Eventos;
+import tec.requerimientos.kevin.soytec.database.EventosTec.Usuarios;
+import tec.requerimientos.kevin.soytec.database.EventosTec.Asistencias;
 import tec.requerimientos.kevin.soytec.database.EventosTec.Favoritos;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,10 +31,10 @@ public class BaseDatosEventosTec extends SQLiteOpenHelper {
                 Tablas.mensaje, Mensajes.id);
 
         String idEvento = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
-                Tablas.evento, Evento.id);
+                Tablas.evento, Eventos.id);
 
         String idUsuario = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
-                Tablas.usuario, Usuario.id);
+                Tablas.usuario, Usuarios.id);
     }
 
     public BaseDatosEventosTec(Context contexto) {
@@ -66,8 +66,8 @@ public class BaseDatosEventosTec extends SQLiteOpenHelper {
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT NOT NULL %s,%s TEXT NOT NULL %s)",
                 Tablas.asistencia, BaseColumns._ID,
-                Asistencia.idUsuario, Referencias.idUsuario,
-                Asistencia.idEvento, Referencias.idEvento));
+                Asistencias.idUsuario, Referencias.idUsuario,
+                Asistencias.idEvento, Referencias.idEvento));
 
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT NOT NULL %s,%s TEXT NOT NULL %s)",
@@ -80,20 +80,10 @@ public class BaseDatosEventosTec extends SQLiteOpenHelper {
                         "%s TEXT NOT NULL, %s TEXT NOT NULL," +
                         "%s TEXT NOT NULL)",
                 Tablas.usuario, BaseColumns._ID,
-                Usuario.id, Usuario.correo,
-                Usuario.carnet, Usuario.contrasena,
-                Usuario.tipoUsuario
+                Usuarios.id, Usuarios.correo,
+                Usuarios.carnet, Usuarios.contrasena,
+                Usuarios.tipoUsuario
                 ));
-
-        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL," +
-                        "%s TEXT NOT NULL, %s TEXT NOT NULL," +
-                        "%s TEXT NOT NULL)",
-                Tablas.usuario, BaseColumns._ID,
-                Usuario.id, Usuario.correo,
-                Usuario.carnet, Usuario.contrasena,
-                Usuario.tipoUsuario
-        ));
 
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL," +
@@ -101,10 +91,10 @@ public class BaseDatosEventosTec extends SQLiteOpenHelper {
                         "%s TEXT NOT NULL, %s TEXT NOT NULL" +
                         "%s INTEGER NOT NULL)",
                 Tablas.evento, BaseColumns._ID,
-                Evento.id, Evento.nombre,
-                Evento.fecha, Evento.lugar,
-                Evento.categoria, Evento.organizador,
-                Evento.costo
+                Eventos.id, Eventos.nombre,
+                Eventos.fecha, Eventos.lugar,
+                Eventos.categoria, Eventos.organizador,
+                Eventos.costo
         ));
     }
 

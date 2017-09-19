@@ -1,18 +1,18 @@
 package tec.requerimientos.kevin.soytec.model;
 
 
-public class Mensajes {
+public class Mensaje {
     private int id;
     private int idUsuario;
     private String mensaje;
 
-    public Mensajes(int id, int idUsuario, String mensaje) {
+    public Mensaje(int id, int idUsuario, String mensaje) {
         this.id = id;
         this.idUsuario = idUsuario;
         this.mensaje = mensaje;
     }
 
-    public Mensajes() {
+    public Mensaje() {
     }
 
     public int getId() {
